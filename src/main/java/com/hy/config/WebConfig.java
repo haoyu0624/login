@@ -1,5 +1,6 @@
 package com.hy.config;
 
+import com.hy.security.MyAccessDeniedHandlerImpl;
 import com.hy.security.MyAuthenctiationFailureHandler;
 import com.hy.security.MyAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,20 +18,28 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private MyAuthenctiationFailureHandler myAuthenctiationFailureHandler;
 
+    @Autowired
+    private MyAccessDeniedHandlerImpl myAccessDeniedHandlerImpl;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
-                .loginPage("/signIn.html")
-                .loginProcessingUrl("/authentication/form")
-                .successHandler(myAuthenticationSuccessHandler)
-                .failureHandler(myAuthenctiationFailureHandler)
+                    .loginPage("/signIn.html")
+                    .loginProcessingUrl("/authentication/form")
+                    .successHandler(myAuthenticationSuccessHandler)
+                    .failureHandler(myAuthenctiationFailureHandler)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/signIn.html").permitAll()
-                .antMatchers("/user").hasRole("ADMIN")
-                .anyRequest()
-                .authenticated()
+                    .antMatchers("/signIn.html").permitAll()
+                    .antMatchers("/user","/order").hasRole("ADMIN")
+                    .antMatchers("/order").hasRole("COMMON")
+                    .anyRequest()
+                    .authenticated()
+                .and()
+                .exceptionHandling().accessDeniedHandler(myAccessDeniedHandlerImpl)
                 .and()
                 .csrf().disable();
     }
+
+
 }

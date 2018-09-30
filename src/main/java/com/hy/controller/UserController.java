@@ -1,7 +1,7 @@
 package com.hy.controller;
 
+import com.hy.model.UserInfo;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,8 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 public class UserController {
 
     @GetMapping("/user")
-    public String Login(HttpServletRequest request, HttpServletResponse response){
-        System.out.println("获取用户");
-        return "success";
+    public UserInfo Login(HttpServletRequest request, HttpServletResponse response){
+        UserInfo user = new UserInfo();
+        user.setName("张三");
+        user.setAge(50);
+        user.setAddress("碧桂园");
+        return user;
     }
 }
