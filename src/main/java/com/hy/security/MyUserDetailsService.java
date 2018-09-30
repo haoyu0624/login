@@ -22,6 +22,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
+	@Override
 	public UserDetails loadUserByUsername(String username) {
 		// 根据用户名查找用户信息
 		//根据查找到的用户信息判断用户是否被冻结
