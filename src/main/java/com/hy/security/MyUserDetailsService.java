@@ -30,6 +30,6 @@ public class MyUserDetailsService implements UserDetailsService {
 		System.out.println("username = [" + username + "]");
 		return new User(username, "123456",
 				true, true, true, true,
-				AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
+				AuthorityUtils.commaSeparatedStringToAuthorityList("role_admin"));
 	}
 }
